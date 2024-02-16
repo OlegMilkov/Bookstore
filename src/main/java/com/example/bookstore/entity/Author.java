@@ -1,5 +1,6 @@
 package com.example.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Author {
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE},
             mappedBy = "author")
+    @JsonIgnore
     private List<Book> books;
 
     public void addBooktoAuthor (Book book){

@@ -2,8 +2,10 @@ package com.example.bookstore.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-@Table(name = "book")
+@Table(name = "books")
 public class Book {
 
     @Id
@@ -17,6 +19,13 @@ public class Book {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "quantity_in_stock")
+    private int quantityInStock;
+
+    @OneToMany(mappedBy = "book")
+    private List<OrderDetail> orderDetails;
+
+
     @ManyToOne( cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE})
     @JoinColumn(name = "author_id")
     private Author author;
@@ -24,10 +33,11 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String photo, Double price) {
+    public Book(String title, String photo, Double price, int quantityInStock ) {
         this.title = title;
         this.photo = photo;
         this.price = price;
+        this.quantityInStock=quantityInStock;
     }
 
     public int getId() {
@@ -70,13 +80,34 @@ public class Book {
         this.author = author;
     }
 
+    public Integer getQuantityInStock() {
+        return quantityInStock;
+    }
+
+    public void setQuantityInStock(Integer quantityInStock) {
+        this.quantityInStock = quantityInStock;
+    }
+
+    public void setQuantityInStock(int quantityInStock) {
+        this.quantityInStock = quantityInStock;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", photo='" + photo + '\'' +
                 ", price=" + price +
+                ", quantityInStock=" + quantityInStock +
+                ", author=" + author +
                 '}';
     }
 }
