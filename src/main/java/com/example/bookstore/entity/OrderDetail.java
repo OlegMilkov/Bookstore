@@ -1,5 +1,6 @@
 package com.example.bookstore.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -9,10 +10,10 @@ import jakarta.persistence.*;
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "order_detail_id")
-        private Long orderDetailId;
+        private int orderDetailId;
 
         @ManyToOne
-        @JoinColumn(name = "order_id")
+        @JoinColumn(name = "order_id" )
         private Order order;
 
         @ManyToOne
@@ -28,18 +29,16 @@ import jakarta.persistence.*;
         public OrderDetail() {
         }
 
-        public OrderDetail(Order order, Book book, Integer quantity, Double totalPrice) {
-            this.order = order;
-            this.book = book;
+        public OrderDetail(Integer quantity, Double totalPrice) {
             this.quantity = quantity;
             this.totalPrice = totalPrice;
         }
 
-        public Long getOrderDetailId() {
+        public int getOrderDetailId() {
             return orderDetailId;
         }
 
-        public void setOrderDetailId(Long orderDetailId) {
+        public void setOrderDetailId(int orderDetailId) {
             this.orderDetailId = orderDetailId;
         }
 
