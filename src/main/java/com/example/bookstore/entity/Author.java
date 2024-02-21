@@ -18,19 +18,9 @@ public class Author {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE},
-            mappedBy = "author")
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE}, mappedBy = "author")
     @JsonIgnore
     private List<Book> books;
-
-    public void addBooktoAuthor (Book book){
-        if (books== null){
-            books = new ArrayList<>();
-        }
-        books.add(book);
-        book.setAuthor(this);
-    }
-
 
     public Author() {
     }
@@ -42,7 +32,6 @@ public class Author {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }

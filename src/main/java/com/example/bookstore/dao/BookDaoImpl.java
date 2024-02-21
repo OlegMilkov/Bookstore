@@ -24,15 +24,15 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getAllBooksByAuthor(String name) {
-        Query query= entityManager.createQuery("SELECT b FROM Book b WHERE b.author.name = :authorName");
+        Query query = entityManager.createQuery("SELECT b FROM Book b WHERE b.author.name = :authorName");
         query.setParameter("authorName", name);
-        List<Book>result= query.getResultList();
+        List<Book> result = query.getResultList();
         return result;
     }
 
     @Override
-    public Book getBookById(int id){
-        Book book= entityManager.find(Book.class, id);
+    public Book getBookById(int id) {
+        Book book = entityManager.find(Book.class, id);
         return book;
     }
 
@@ -43,7 +43,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void deleteBook(int id) {
-        Query query= entityManager.createQuery("delete from Book " + "where id = :BookId");
+        Query query = entityManager.createQuery("delete from Book " + "where id = :BookId");
         query.setParameter("BookId", id);
         query.executeUpdate();
     }
