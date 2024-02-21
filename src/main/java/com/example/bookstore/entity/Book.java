@@ -18,17 +18,17 @@ public class Book {
     private String photo;
     @Column(name = "price")
     private Double price;
-
     @Column(name = "quantity_in_stock")
     private int quantityInStock;
 
     @OneToMany(mappedBy = "book")
     private List<OrderDetail> orderDetails;
 
-
+//-------------------------------------------------------------------------------------------
     @ManyToOne( cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE})
     @JoinColumn(name = "author_id")
     private Author author;
+//-------------------------------------------------------------------------------------------
 
     public Book() {
     }
@@ -80,25 +80,15 @@ public class Book {
         this.author = author;
     }
 
-    public Integer getQuantityInStock() {
+    public int getQuantityInStock() {
         return quantityInStock;
-    }
-
-    public void setQuantityInStock(Integer quantityInStock) {
-        this.quantityInStock = quantityInStock;
     }
 
     public void setQuantityInStock(int quantityInStock) {
         this.quantityInStock = quantityInStock;
     }
 
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
 
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 
     @Override
     public String toString() {
