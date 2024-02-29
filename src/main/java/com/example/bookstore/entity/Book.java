@@ -17,7 +17,7 @@ public class Book {
     @Column(name = "photo")
     private String photo;
     @Column(name = "price")
-    private Double price;
+    private double price;
     @Column(name = "quantity_in_stock")
     private int quantityInStock;
 

@@ -8,4 +8,6 @@ public interface OrderDetailsService {
 
     public List<OrderDetail> getAllOrderDetails();
 
+    public void saveOrderDetail(OrderDetail orderDetail);
+
 }

@@ -15,11 +15,12 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
         @Override
     public List<OrderDetail> getAllOrderDetails() {
-//        Query query = entityManager.createQuery("from OrderDetail ");
-//        List<OrderDetail> allOrderDetails = query.getResultList();
-//        return allOrderDetails;
+        return orderDetailsRepository.findAll();
+    }
 
-        return  orderDetailsRepository.findAll();
+    @Override
+    public void saveOrderDetail(OrderDetail orderDetail) {
+        orderDetailsRepository.save(orderDetail);
     }
 
 

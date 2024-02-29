@@ -1,6 +1,7 @@
 package com.example.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -21,8 +22,8 @@ public class Order {
     @Column(name = "order_date" ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
     private LocalDateTime orderDate;
 
-    @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonIgnore
+    @OneToMany(mappedBy = "order" ,cascade = CascadeType.ALL)
+//    @JsonIgnore
     private List<OrderDetail> orderDetails;
 
     public Order() {
@@ -60,13 +61,7 @@ public class Order {
     }
 
 
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
 
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
 
     @Override
     public String toString() {

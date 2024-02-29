@@ -19,7 +19,7 @@ public class Author {
     private String name;
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH,CascadeType.MERGE}, mappedBy = "author")
-    @JsonIgnore
+//    @JsonIgnore
     private List<Book> books;
 
     public Author() {
@@ -44,13 +44,7 @@ public class Author {
         this.name = name;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
 
     @Override
     public String toString() {

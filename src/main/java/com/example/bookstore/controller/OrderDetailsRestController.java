@@ -1,12 +1,12 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.entity.Book;
 import com.example.bookstore.entity.OrderDetail;
+import com.example.bookstore.service.BookService;
 import com.example.bookstore.service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +23,14 @@ public class OrderDetailsRestController {
         List<OrderDetail> allOrderDetails = orderDetailsService.getAllOrderDetails();
         return allOrderDetails;
     }
+
+    //додати нове замовлення
+    @PostMapping("/orderDetail")
+    public OrderDetail addNewOrderDetail(@RequestBody OrderDetail orderDetail) {
+        orderDetailsService.saveOrderDetail(orderDetail);
+        return orderDetail;
+    }
+
 
 
 }

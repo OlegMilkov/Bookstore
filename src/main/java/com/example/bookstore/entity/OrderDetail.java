@@ -74,14 +74,14 @@ import jakarta.persistence.*;
             this.totalPrice = totalPrice;
         }
 
-        @Override
-        public String toString() {
-            return "OrderDetail{" +
-                    "order=" + order +
-                    ", book=" + book +
-                    ", quantity=" + quantity +
-                    ", totalPrice=" + totalPrice +
-                    '}';
-        }
+//        @Override
+//        public String toString() {
+//            return "OrderDetail{" +
+//                    "order=" + order +
+//                    ", book=" + book +
+//                    ", quantity=" + quantity +
+//                    ", totalPrice=" + totalPrice +
+//                    '}';
+//        }
     }
 

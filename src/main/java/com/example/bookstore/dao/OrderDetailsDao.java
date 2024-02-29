@@ -8,5 +8,5 @@ public interface OrderDetailsDao {
 
     public List<OrderDetail> getAllOrderDetails();
 
-
+public void saveOrderDetail(OrderDetail orderDetail);
 }
