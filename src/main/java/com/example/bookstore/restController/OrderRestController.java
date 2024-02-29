@@ -1,9 +1,7 @@
-package com.example.bookstore.controller;
+package com.example.bookstore.restController;
 
 import com.example.bookstore.entity.Order;
-import com.example.bookstore.entity.OrderDetail;
 import com.example.bookstore.service.OrderService;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.example.bookstore.controller;
+package com.example.bookstore.restController;
 
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.service.BookService;

@@ -1,11 +1,8 @@
-package com.example.bookstore.controller;
+package com.example.bookstore.restController;
 
-import com.example.bookstore.entity.Book;
 import com.example.bookstore.entity.OrderDetail;
-import com.example.bookstore.service.BookService;
 import com.example.bookstore.service.OrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
