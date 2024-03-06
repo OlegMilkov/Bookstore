@@ -52,6 +52,11 @@
         input[type="submit"]:hover {
             background-color: #2980b9;
         }
+
+        h2 {
+            font-size: 30px;
+            color: #777;
+        }
     </style>
 </head>
 <body>
@@ -61,7 +66,10 @@
 <form action="saveOrder" method="post">
     <input type="hidden" name="id" value="${order.id}"/>
 
-    <input type="hidden" name="orderDetail" value="${orderDetail.orderDetailId!}" placeholder="Order Detail"/>
+<#--    <input type="hidden" name="orderDetail" value="${orderDetail.orderDetailId!}" placeholder="Order Detail"/>-->
+    <input type="hidden" name="bookId" value="${book.id}"/>
+    <input type="hidden" name="quantity" value="${orderDetail.quantity}"/>
+
 
     Name<input type="text" name="name" value="${order.name!}" placeholder="Name"/>
     <br><br>
