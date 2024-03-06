@@ -89,11 +89,11 @@ public class Book {
     }
 
 
-
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", photo='" + photo + '\'' +
                 ", price=" + price +
                 ", quantityInStock=" + quantityInStock +

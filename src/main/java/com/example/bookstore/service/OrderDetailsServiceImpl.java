@@ -24,6 +24,12 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         return orderDetailsDao.getAllOrderDetails();
     }
 
+//    @Override
+//    @Transactional
+//    public void saveOrderDetail(OrderDetail orderDetail) {
+//         orderDetailsDao.saveOrderDetail( orderDetail);
+//    }
+
 
     @Override
     @Transactional
@@ -47,7 +53,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
                 } else {
                     throw new RuntimeException("Not enough books in stock");
                 }
-                //озрахунок для totalPrice
+                //розрахунок для totalPrice
                 if (orderquantity != 0) {
                     orderDetail.setTotalPrice(bookprice * orderquantity);
                     orderDetailsDao.saveOrderDetail(orderDetail);

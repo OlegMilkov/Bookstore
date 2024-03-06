@@ -1,83 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Books</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
         }
 
         h2 {
             text-align: center;
             color: #333;
+            margin-bottom: 20px;
+        }
+
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .book-card {
-            display: inline-block;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 20px;
             overflow: hidden;
-            margin-right: 20px;
-            margin-bottom: 20px;
-            background-color: #fff;
-            transition: transform 0.3s ease-in-out;
+            background: #fff;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 10px; /* Відступи з ліва і справа */
-            width: 200px; /* Фіксований розмір */
-            height: 300px; /* Фіксований розмір */
+            transition: transform 0.3s ease-in-out;
         }
 
         .book-card:hover {
             transform: scale(1.05);
         }
 
+        .book-image {
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
+        }
 
         .book-details {
             padding: 20px;
-            overflow-wrap: break-word; /* Дозволяє рядкам переходити на наступний рядок */
-        }
-
-
-        .book-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 8px;
-        }
-
-        .book-info {
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .center {
             text-align: center;
         }
-    </style>
-    <title>Bookstore</title>
-</head>
 
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin: 8px 0;
+        }
+
+        form {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        /* Додали стилі для назви "All Books" */
+        h2 {
+            font-size: 36px;
+            color: #777;
+        }
+    </style>
+</head>
 <body>
+
 <h2>All Books</h2>
 
-<#list allBooks as book>
-    <div class="book-card">
-        <h3 class="book-title center">${book.title}</h3>
-        <div class="book-details">
-            <p class="book-info"><strong>Photo:</strong> ${book.photo}</p>
-            <p class="book-info"><strong>Price:</strong> ${book.price}</p>
-            <p class="book-info"><strong>Author:</strong> ${book.author.name}</p>
+<div class="book-container">
+    <#list allBooks as book>
+        <div class="book-card">
+
+            <div class="book-details">
+                <h3>${book.title}</h3>
+                <img class="book-image" src="${book.photo}" alt="Book Cover">
+                <p>Author: ${book.author.name}</p>
+                <p>Price: ${book.price}</p>
+                <p>Quantity in Stock: ${book.quantityInStock}</p>
+                <form action="/book/addOrder" method="post">
+                    <input type="hidden" name="bookId" value="${book.id}">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="${book.quantityInStock}" required>
+                    <input type="submit" value="Buy">
+                </form>
+            </div>
         </div>
-    </div>
-</#list>
+    </#list>
+</div>
+
 </body>
-
 </html>
-
-
-
-

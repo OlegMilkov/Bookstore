@@ -29,10 +29,13 @@ import jakarta.persistence.*;
         public OrderDetail() {
         }
 
-        public OrderDetail(Integer quantity, Double totalPrice) {
+        public OrderDetail(Order order, Book book, Integer quantity, Double totalPrice) {
+            this.order = order;
+            this.book = book;
             this.quantity = quantity;
             this.totalPrice = totalPrice;
         }
+
 
         public int getOrderDetailId() {
             return orderDetailId;
