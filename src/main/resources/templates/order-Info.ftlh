@@ -63,10 +63,9 @@
 
 <h2>Order Information</h2>
 
-<form action="saveOrder" method="post">
+<form action="saveOrderAndOrderDetail" method="post">
     <input type="hidden" name="id" value="${order.id}"/>
 
-<#--    <input type="hidden" name="orderDetail" value="${orderDetail.orderDetailId!}" placeholder="Order Detail"/>-->
     <input type="hidden" name="bookId" value="${book.id}"/>
     <input type="hidden" name="quantity" value="${orderDetail.quantity}"/>
 

@@ -36,26 +36,6 @@ public class BookController {
         return "all-Books";
     }
 
-    //----------------------------------------------------
-//    @RequestMapping("/addOrder")
-//    public String newOrder(@RequestParam("bookId") int bookId,
-//                           @RequestParam("quantity") int quantity,
-//                           Model model) {
-//
-//        Book book = bookService.getBookById(bookId);
-//
-//        OrderDetail orderDetail = new OrderDetail();
-//        orderDetail.setQuantity(quantity);
-//        orderDetail.setBook(book);
-//        orderDetailsService.saveOrderDetail(orderDetail);
-//        model.addAttribute("orderDetail", orderDetail);
-//
-//        Order order = new Order();
-//        model.addAttribute("order", order);
-//
-//        return "order-Info";
-//    }
-
     @RequestMapping("/addOrder")
     public String newOrder(@RequestParam("bookId") int bookId,
                            @RequestParam("quantity") int quantity,
@@ -77,10 +57,11 @@ public class BookController {
     }
 
     //---------------------------------------------------------
-    @RequestMapping("/saveOrder")
+    @RequestMapping("/saveOrderAndOrderDetail")
     public String saveOrder(@ModelAttribute("order") Order order,
                             @RequestParam("bookId") int bookId,
-                            @RequestParam("quantity") int quantity){
+                            @RequestParam("quantity") int quantity,
+                            Model model){
 
         orderService.saveOrder(order);
 
@@ -92,20 +73,16 @@ public class BookController {
         orderDetail.setOrder(order);
         orderDetailsService.saveOrderDetail(orderDetail);
 
+        model.addAttribute("orderDetail",orderDetail);
 
 
+        return "/orderDetail-info";
+    }
+
+    @RequestMapping("/mainPage")
+    public String mainPage() {
         return "redirect:/book/getAllBook";
     }
 
-//    @RequestMapping("/saveOrder")
-//    public String saveOrder(@ModelAttribute("order") Order order,
-//                            @ModelAttribute("orderDetail") OrderDetail orderDetail){
-//        orderService.saveOrder(order);
-//
-//        orderDetail.setOrder(order);
-//        orderDetailsService.saveOrderDetail(orderDetail);
-//
-//        return "redirect:/book/getAllBook";
-//    }
     }
 
