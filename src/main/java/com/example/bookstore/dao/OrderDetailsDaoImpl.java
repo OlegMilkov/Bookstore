@@ -11,7 +11,7 @@ import java.util.List;
 public class OrderDetailsDaoImpl implements OrderDetailsDao {
 
     @Autowired
-    OrderDetailsRepository orderDetailsRepository;
+   private OrderDetailsRepository orderDetailsRepository;
 
         @Override
     public List<OrderDetail> getAllOrderDetails() {

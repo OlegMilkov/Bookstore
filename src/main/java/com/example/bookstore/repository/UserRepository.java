@@ -1,9 +1,9 @@
 package com.example.bookstore.repository;
 
-import com.example.bookstore.entity.User;
+import com.example.bookstore.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-    public interface UserRepository extends JpaRepository<User, String> {
+    public interface UserRepository extends JpaRepository<Users, String> {
 
     }

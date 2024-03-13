@@ -1,9 +1,7 @@
 package com.example.bookstore.dao;
 
 import com.example.bookstore.entity.Order;
-import com.example.bookstore.entity.OrderDetail;
 import com.example.bookstore.repository.OrderRepository;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

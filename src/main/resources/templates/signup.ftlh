@@ -13,10 +13,8 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             flex-direction: column;
+            align-items: center;
         }
 
         /* Стилі для форми */
@@ -27,45 +25,61 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 300px;
-            margin: 20px;
+            margin: 10px auto;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
-            color: #6b6b6b; /* Змінено колір тексту */
-            font-weight: bold; /* Змінено товщину шрифту */
-            text-align: left; /* Додано вирівнювання тексту зліва */
+            color: #6b6b6b;
+            font-weight: bold;
+            text-align: left;
         }
 
         input[type="text"],
-        input[type="password"] {
+        input[type="password"],
+        input[type="submit"] {
             width: 100%;
-            padding: 8px;
+            padding: 10px; /* Збільшено висоту поля */
             margin-bottom: 10px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease-in-out;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        input[type="text"]:hover,
+        input[type="password"]:hover {
+            border-color: #007afd;
         }
 
         input[type="submit"] {
-            background-color: #3498db;
+            background-color: #007afd;
             color: #fff;
-            padding: 10px 20px;
+            padding: 15px; /* Збільшено висоту кнопки */
+            height: 50px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
         }
 
         input[type="submit"]:hover {
-            background-color: #2980b9;
+            background-color: #0466d0;
         }
 
         /* Додаткові стилі для заголовку */
         h2 {
             font-size: 36px;
-            color: #777;
-            margin-bottom: 20px;
+            color: #1f1f1f;
+            margin-bottom: 10px;
+            text-align: center;
+            margin-top: 30px;
         }
+
     </style>
 </head>
 
@@ -74,21 +88,17 @@
 <h2>Sign Up</h2>
 
 <form action="/user/saveUser" method="post">
-    <label for="username">Name:</label>
-    <input type="text" id="username" name="username" value="${user.username!}" required>
+
+    <input type="text" id="username" name="username" placeholder="Username" required>
     <br><br>
 
-    <label for="email">Email:</label>
-    <input type="text" id="email" name="email" value="${user.email!}" required>
+    <input type="text" id="email" name="email" placeholder="Email" required>
     <br><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" value="${user.password!}" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
     <br><br>
 
     <input type="submit" value="OK">
 </form>
-
 </body>
-
 </html>
