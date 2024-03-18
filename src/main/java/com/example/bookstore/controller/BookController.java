@@ -3,6 +3,7 @@ package com.example.bookstore.controller;
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.OrderDetail;
+import com.example.bookstore.entity.ShoppingCart;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.service.OrderDetailsService;
 import com.example.bookstore.service.OrderService;
@@ -22,12 +23,14 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-
     @Autowired
     private OrderService orderService;
 
     @Autowired
     private OrderDetailsService orderDetailsService;
+
+    @Autowired
+    private ShoppingCart shoppingCart;
 
     @RequestMapping("/getAllBook")
     public String showAllBooks(Model model) {
@@ -36,16 +39,40 @@ public class BookController {
         return "all-Books";
     }
 
+
+
+    //--------------------------------------------------------
+    @RequestMapping("/addBookToShoppingCart")
+    public String addBookToCart(@RequestParam("bookId") int id) {
+        Book book = bookService.getBookById(id);
+        if (book != null) {
+            shoppingCart.addBook(book);
+        }
+//що це таке
+        System.out.println(shoppingCart.getBooks());
+        return "redirect:/book/getAllBook";
+    }
+
+    //    --------------------------------------------------------
+    @RequestMapping("/shoppingCart")
+    public String ShoppingCart(Model model) {
+        List<Book> booksInCart = shoppingCart.getBooks();
+        model.addAttribute("booksInCart", booksInCart);
+
+        return "shoppingCart";
+    }
+
+
     @RequestMapping("/addOrder")
     public String newOrder(@RequestParam("bookId") int bookId,
                            @RequestParam("quantity") int quantity,
                            Model model) {
 
-        Book book= new Book();
+        Book book = new Book();
         book.setId(bookId);
         model.addAttribute("book", book);
 
-        OrderDetail orderDetail= new OrderDetail();
+        OrderDetail orderDetail = new OrderDetail();
         orderDetail.setQuantity(quantity);
         model.addAttribute("orderDetail", orderDetail);
 
@@ -61,7 +88,7 @@ public class BookController {
     public String saveOrder(@ModelAttribute("order") Order order,
                             @RequestParam("bookId") int bookId,
                             @RequestParam("quantity") int quantity,
-                            Model model){
+                            Model model) {
 
         orderService.saveOrder(order);
 
@@ -73,7 +100,7 @@ public class BookController {
         orderDetail.setOrder(order);
         orderDetailsService.saveOrderDetail(orderDetail);
 
-        model.addAttribute("orderDetail",orderDetail);
+        model.addAttribute("orderDetail", orderDetail);
 
 
         return "/orderDetail-info";
@@ -84,5 +111,5 @@ public class BookController {
         return "redirect:/book/getAllBook";
     }
 
-    }
 
+}

@@ -33,11 +33,13 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String photo, Double price, int quantityInStock ) {
+
+    public Book(String title, String photo, double price, int quantityInStock, Author author) {
         this.title = title;
         this.photo = photo;
         this.price = price;
-        this.quantityInStock=quantityInStock;
+        this.quantityInStock = quantityInStock;
+        this.author = author;
     }
 
     public int getId() {
@@ -64,11 +66,11 @@ public class Book {
         this.photo = photo;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -88,6 +90,15 @@ public class Book {
         this.quantityInStock = quantityInStock;
     }
 
+
+
+//    public List<OrderDetail> getOrderDetails() {
+//        return orderDetails;
+//    }
+//
+//    public void setOrderDetails(List<OrderDetail> orderDetails) {
+//        this.orderDetails = orderDetails;
+//    }
 
     @Override
     public String toString() {

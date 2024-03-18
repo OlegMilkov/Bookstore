@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Books</title>
+    <title>Shopping Cart</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -66,11 +66,6 @@
             margin: 8px 0;
         }
 
-        form {
-            margin-top: 10px;
-            text-align: center;
-        }
-
         label {
             display: block;
             margin-bottom: 5px;
@@ -84,7 +79,7 @@
             box-sizing: border-box;
         }
 
-        input[type="submit"], input[type="button"] {
+        input[type="submit"] {
             background-color: #3498db;
             color: #fff;
             padding: 10px 20px;
@@ -95,26 +90,22 @@
             margin-top: 5px;
         }
 
-        input[type="submit"]:hover, input[type="button"]:hover {
+        input[type="submit"]:hover {
             background-color: #2980b9;
-        }
-
-        /* Додали стилі для назви "All Books" */
-        h2 {
-            font-size: 36px;
-            color: #777;
         }
     </style>
 </head>
 <body>
 
-<h2>All Books</h2>
-<input type="button" value="ShoppingCart" onclick="window.location.href='/book/shoppingCart'"/>
-<div class="book-container">
-    <#list allBooks as book>
+<h2>Shopping Cart</h2>
+<input type="button" value="Buy" onclick="window.location.href='/book/addOrder'"/>
 
-        <form action="/book/addOrder" method="post">
+<div class="book-container">
+
+    <#list booksInCart as book>
+<#--        <form action="/book/addOrder" method="post">-->
             <div class="book-card">
+
                 <div class="book-details">
                     <h3>${book.title}</h3>
                     <img class="book-image" src="${book.photo}" alt="Book Cover">
@@ -123,17 +114,15 @@
                     <p>Quantity in Stock: ${book.quantityInStock}</p>
 
                     <input type="hidden" name="bookId" value="${book.id}">
-                    <#--                    <label for="quantity">Quantity:</label>-->
+                    <label for="quantity">Quantity:</label>
                     <input type="number" id="quantity" name="quantity" value="1" min="1" max="${book.quantityInStock}" required>
-                    <input type="submit" value="Buy">
-                    <br>
-                    <input type="button" value="To Cart" onclick="window.location.href='/book/addBookToShoppingCart?bookId=${book.id}'"/>
+
                 </div>
             </div>
-        </form>
+<#--            <input type="submit" value="Buy">-->
+<#--        </form>-->
     </#list>
 
 </div>
-
 </body>
 </html>

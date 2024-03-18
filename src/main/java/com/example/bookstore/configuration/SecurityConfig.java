@@ -49,7 +49,8 @@ public class SecurityConfig {
 //                        .requestMatchers("/deleteChild").hasRole("MANAGER")
 //                        .requestMatchers("/addNewChild").hasAnyRole("MANAGER", "HR")
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/book/**").authenticated()
+                                .requestMatchers("/book/**").authenticated()
+//                                .requestMatchers("/book/shoppingCart").permitAll()
                 )
                 .formLogin(formLogin -> formLogin
                         // перенаправлення на головну сторінку після успішної аутентифікації
