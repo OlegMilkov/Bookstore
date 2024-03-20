@@ -23,5 +23,10 @@ public class OrderDetailsDaoImpl implements OrderDetailsDao {
         orderDetailsRepository.save(orderDetail);
     }
 
+    @Override
+    public List<OrderDetail> getAllOrderDetailsByOrder(int id) {
+        return orderDetailsRepository.findAllByOrderId(id);
+    }
+
 
 }

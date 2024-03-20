@@ -82,16 +82,16 @@
 <h2>Employee Info</h2>
 
 <form action="/book/mainPage">
-    <input type="hidden" name="id" value="${orderDetail.orderDetailId}"/>
+    <input type="text" name="id" value="${orderDetailItem[0].orderDetailId}"/>
 
     <!-- Перша група інформації (зліва) -->
     <div>
-        <p><strong>Name:</strong> ${orderDetail.order.name}</p>
-        <p><strong>Surname:</strong> ${orderDetail.order.surname}</p>
-        <p><strong>Phone:</strong> ${orderDetail.order.phone}</p>
-        <p><strong>Email:</strong> ${orderDetail.order.email}</p>
-        <p><strong>Post office:</strong> ${orderDetail.order.post_office}</p>
-        <p><strong>Order date:</strong> ${orderDetail.order.orderDate}</p>
+        <p><strong>Name:</strong> ${orderDetailItem[0].order.name}</p>
+        <p><strong>Surname:</strong> ${orderDetailItem[0].order.surname}</p>
+        <p><strong>Phone:</strong> ${orderDetailItem[0].order.phone}</p>
+        <p><strong>Email:</strong> ${orderDetailItem[0].order.email}</p>
+        <p><strong>Post Office:</strong> ${orderDetailItem[0].order.post_office}</p>
+        <p><strong>Order Date:</strong> ${orderDetailItem[0].order.orderDate}</p>
     </div>
 
     <!-- Простір між групами інформації -->
@@ -99,13 +99,15 @@
 
 
     <!-- Друга група інформації (справа) -->
+    <#list orderDetailItem as orderDetail>
+
     <div>
         <p><strong>Book:</strong> ${orderDetail.book.title}</p>
         <img src="${orderDetail.book.photo}" alt="Book Photo" style="max-width: 100%; height: auto; margin-bottom: 10px;">
         <p><strong>Quantity:</strong> ${orderDetail.quantity}</p>
         <p><strong>Total price:</strong> ${orderDetail.totalPrice}</p>
     </div>
-
+    </#list>
     <input type="submit" value="OK">
 </form>
 

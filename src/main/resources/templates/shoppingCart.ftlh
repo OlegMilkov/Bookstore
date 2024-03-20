@@ -98,12 +98,11 @@
 <body>
 
 <h2>Shopping Cart</h2>
-<input type="button" value="Buy" onclick="window.location.href='/book/addOrder'"/>
+<form action="/book/addOrder11" method="post">
 
-<div class="book-container">
+    <div class="book-container">
 
-    <#list booksInCart as book>
-<#--        <form action="/book/addOrder" method="post">-->
+        <#list booksInCart as book>
             <div class="book-card">
 
                 <div class="book-details">
@@ -119,10 +118,11 @@
 
                 </div>
             </div>
-<#--            <input type="submit" value="Buy">-->
-<#--        </form>-->
-    </#list>
+        </#list>
 
-</div>
+    </div>
+    <input type="submit" value="Buy" >
+
+</form>
 </body>
 </html>

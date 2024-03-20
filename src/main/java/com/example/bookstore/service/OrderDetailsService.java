@@ -10,4 +10,6 @@ public interface OrderDetailsService {
 
     public void saveOrderDetail(OrderDetail orderDetail);
 
+    public List<OrderDetail> getAllOrderDetailsByOrder(int id);
+
 }

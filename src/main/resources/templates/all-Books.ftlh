@@ -113,7 +113,7 @@
 <div class="book-container">
     <#list allBooks as book>
 
-        <form action="/book/addOrder" method="post">
+        <form action="/book/addOrder11" method="post">
             <div class="book-card">
                 <div class="book-details">
                     <h3>${book.title}</h3>

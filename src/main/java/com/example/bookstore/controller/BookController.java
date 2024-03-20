@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.xml.sax.ext.Locator2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -40,7 +42,6 @@ public class BookController {
     }
 
 
-
     //--------------------------------------------------------
     @RequestMapping("/addBookToShoppingCart")
     public String addBookToCart(@RequestParam("bookId") int id) {
@@ -63,24 +64,60 @@ public class BookController {
     }
 
 
-    @RequestMapping("/addOrder")
-    public String newOrder(@RequestParam("bookId") int bookId,
-                           @RequestParam("quantity") int quantity,
+    @RequestMapping("/addOrder11")
+    public String addOrder(@RequestParam("bookId") List<Integer> bookIds,
+                           @RequestParam("quantity") List<Integer> quantities,
                            Model model) {
 
-        Book book = new Book();
-        book.setId(bookId);
-        model.addAttribute("book", book);
+        List<Integer> bookIdNumber= new ArrayList<>();
+        List<Integer> quantityNumber= new ArrayList<>();
 
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setQuantity(quantity);
-        model.addAttribute("orderDetail", orderDetail);
+        // Логіка обробки замовлення для кожної книжки в списку
+        for (int i = 0; i < bookIds.size(); i++) {
+            int bookId = bookIds.get(i);
+            int quantity = quantities.get(i);
 
+            bookIdNumber.add(bookId);
+            quantityNumber.add(quantity);
+        }
+        model.addAttribute("book", bookIdNumber);
+       model.addAttribute("quantity", quantityNumber);
 
+        // Додаємо порожній об'єкт Order в модель
         Order order = new Order();
         model.addAttribute("order", order);
 
-        return "order-Info";
+        return "order-Info2";
+    }
+
+    //---------------------------------------------------------
+    @RequestMapping("/saveOrderAndOrderDetail11")
+    public String saveOrder11(@ModelAttribute("order") Order order,
+                              @RequestParam("bookId") List<Integer> bookIds,
+                              @RequestParam("quantity") List<Integer> quantities,
+                            Model model) {
+
+        orderService.saveOrder(order);
+        int orderId =order.getId();
+
+                for (int i = 0; i < bookIds.size(); i++) {
+            int idNumber = bookIds.get(i);
+            int quantityNumber = quantities.get(i);
+
+            Book book= bookService.getBookById(idNumber);
+
+            OrderDetail orderDetail= new OrderDetail();
+            orderDetail.setQuantity(quantityNumber);
+            orderDetail.setOrder(order);
+            orderDetail.setBook(book);
+            orderDetailsService.saveOrderDetail(orderDetail); // Зберігаємо кожен orderDetail
+        }
+
+        List<OrderDetail> orderDetailsWithIdOrder=orderDetailsService.getAllOrderDetailsByOrder(orderId);
+        model.addAttribute("orderDetailItem", orderDetailsWithIdOrder);
+
+
+        return "/orderDetail-info";
     }
 
     //---------------------------------------------------------
@@ -104,6 +141,26 @@ public class BookController {
 
 
         return "/orderDetail-info";
+    }
+
+    @RequestMapping("/addOrder")
+    public String newOrder(@RequestParam("bookId") int bookId,
+                           @RequestParam("quantity") int quantity,
+                           Model model) {
+
+        Book book = new Book();
+        book.setId(bookId);
+        model.addAttribute("book", book);
+
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setQuantity(quantity);
+        model.addAttribute("orderDetail", orderDetail);
+
+
+        Order order = new Order();
+        model.addAttribute("order", order);
+
+        return "order-Info";
     }
 
     @RequestMapping("/mainPage")
