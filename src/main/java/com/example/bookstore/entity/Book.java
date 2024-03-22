@@ -3,6 +3,7 @@ package com.example.bookstore.entity;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "books")
@@ -99,6 +100,14 @@ public class Book {
 //    public void setOrderDetails(List<OrderDetail> orderDetails) {
 //        this.orderDetails = orderDetails;
 //    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book book)) return false;
+        return getId() == book.getId() && Double.compare(getPrice(), book.getPrice()) == 0 && getQuantityInStock() == book.getQuantityInStock() && Objects.equals(getTitle(), book.getTitle()) && Objects.equals(getPhoto(), book.getPhoto());
+    }
+
 
     @Override
     public String toString() {

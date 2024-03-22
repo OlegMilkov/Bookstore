@@ -39,6 +39,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
+            display: flex; /* Додаємо flex-контейнер */
+            flex-direction: column; /* Налаштовуємо вертикальне вирівнювання */
         }
 
         .book-card:hover {
@@ -54,6 +56,8 @@
         .book-details {
             padding: 20px;
             text-align: center;
+            flex-grow: 1; /* Розтягуємо блок, щоб зайняв весь доступний простір */
+            position: relative; /* Додаємо relative позиціонування */
         }
 
         h3 {
@@ -79,6 +83,29 @@
             box-sizing: border-box;
         }
 
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            color: #0c0c0c;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            transition: background-color 0.3s ease-in-out;
+
+        }
+
+        .close-button:hover {
+            background-color: #f8efef;
+        }
+
         input[type="submit"] {
             background-color: #3498db;
             color: #fff;
@@ -98,28 +125,29 @@
 <body>
 
 <h2>Shopping Cart</h2>
-<form action="/book/addOrder11" method="post">
+<form action="/book/addOrder" method="post">
 
     <div class="book-container">
+        <#if booksInCart??>
+            <#list booksInCart as book>
+                <div class="book-card">
 
-        <#list booksInCart as book>
-            <div class="book-card">
+                    <div class="book-details">
+                        <div class="close-button" onclick="window.location.href='/book/removeBookFromShoppingCart?bookId=${book.id}'">x</div>
+                        <h3>${book.title}</h3>
+                        <img class="book-image" src="${book.photo}" alt="Book Cover">
+                        <p>Author: ${book.author.name}</p>
+                        <p>Price: ${book.price}</p>
+                        <p>Quantity in Stock: ${book.quantityInStock}</p>
 
-                <div class="book-details">
-                    <h3>${book.title}</h3>
-                    <img class="book-image" src="${book.photo}" alt="Book Cover">
-                    <p>Author: ${book.author.name}</p>
-                    <p>Price: ${book.price}</p>
-                    <p>Quantity in Stock: ${book.quantityInStock}</p>
-
-                    <input type="hidden" name="bookId" value="${book.id}">
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" max="${book.quantityInStock}" required>
-
+                        <input type="hidden" name="bookId" value="${book.id}">
+                        Quantity:<input type="number" id="quantity" name="quantity" value="1" min="1" max="${book.quantityInStock}" required>
+                    </div>
                 </div>
-            </div>
-        </#list>
-
+            </#list>
+        <#else>
+            <p>No books in the cart</p>
+        </#if>
     </div>
     <input type="submit" value="Buy" >
 

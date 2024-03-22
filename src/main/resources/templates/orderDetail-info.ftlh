@@ -82,7 +82,7 @@
 <h2>Employee Info</h2>
 
 <form action="/book/mainPage">
-    <input type="text" name="id" value="${orderDetailItem[0].orderDetailId}"/>
+    <input type="hidden" name="id" value="${orderDetailItem[0].orderDetailId}"/>
 
     <!-- Перша група інформації (зліва) -->
     <div>

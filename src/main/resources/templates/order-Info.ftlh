@@ -66,8 +66,17 @@
 <form action="/book/saveOrderAndOrderDetail" method="post">
     <input type="hidden" name="id" value="${order.id}"/>
 
-    <input type="hidden" name="bookId" value="${book.id}"/>
-    <input type="hidden" name="quantity" value="${orderDetail.quantity}"/>
+
+
+    <#list book as bookId>
+        <input type="hidden" name="bookId" value="${bookId}"/>
+        <br>
+    </#list>
+    <#list quantity as qty>
+        <input type="hidden" name="quantity" value="${qty}"/>
+        <br>
+
+    </#list>
 
 
     Name<input type="text" name="name" value="${order.name!}" placeholder="Name"/>

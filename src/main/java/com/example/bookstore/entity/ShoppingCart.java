@@ -3,13 +3,15 @@ package com.example.bookstore.entity;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class ShoppingCart {
 
     public List<Book> books;
-
 
 
     public ShoppingCart(List<Book> books) {

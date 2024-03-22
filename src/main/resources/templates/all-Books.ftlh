@@ -113,7 +113,7 @@
 <div class="book-container">
     <#list allBooks as book>
 
-        <form action="/book/addOrder11" method="post">
+        <form action="/book/addOrder" method="post">
             <div class="book-card">
                 <div class="book-details">
                     <h3>${book.title}</h3>
@@ -123,7 +123,7 @@
                     <p>Quantity in Stock: ${book.quantityInStock}</p>
 
                     <input type="hidden" name="bookId" value="${book.id}">
-                    <#--                    <label for="quantity">Quantity:</label>-->
+
                     <input type="number" id="quantity" name="quantity" value="1" min="1" max="${book.quantityInStock}" required>
                     <input type="submit" value="Buy">
                     <br>
