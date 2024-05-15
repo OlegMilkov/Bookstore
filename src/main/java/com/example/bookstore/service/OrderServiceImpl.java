@@ -1,8 +1,7 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dao.OrderDao;
 import com.example.bookstore.entity.Order;
-import com.example.bookstore.entity.OrderDetail;
+import com.example.bookstore.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +12,12 @@ import java.util.List;
 public class OrderServiceImpl implements  OrderService{
 
     @Autowired
-    OrderDao orderDao;
+    OrderRepository orderRepository;
 
     @Override
     @Transactional
     public List<Order> getAllOrders() {
-        return orderDao.getAllOrders();
+        return orderRepository.findAll();
     }
 
 
@@ -26,7 +25,7 @@ public class OrderServiceImpl implements  OrderService{
     @Override
     @Transactional
     public Order getOrderByID(int id){
-        return orderDao.getOrderByID(id);
+        return orderRepository.getReferenceById(id);
     }
 
 
@@ -37,13 +36,13 @@ public class OrderServiceImpl implements  OrderService{
             // Если orderDate равно null, установите текущую дату
             order.setOrderDate(LocalDateTime.now());
         }
-        orderDao.saveOrder(order);
+        orderRepository.save(order);
     }
 
     @Override
     @Transactional
     public void deleteOrder(int id){
-        orderDao.deleteOrder(id);
+        orderRepository.deleteById(id);
     }
 
 

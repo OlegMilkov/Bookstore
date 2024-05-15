@@ -1,9 +1,8 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dao.OrderDetailsDao;
 import com.example.bookstore.entity.Book;
-import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.OrderDetail;
+import com.example.bookstore.repository.OrderDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +13,7 @@ import java.util.List;
 public class OrderDetailsServiceImpl implements OrderDetailsService {
 
     @Autowired
-    OrderDetailsDao orderDetailsDao;
+    OrderDetailsRepository orderDetailsRepository;
 
     @Autowired
     private BookService bookService;
@@ -22,24 +21,20 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     @Override
     @Transactional
     public List<OrderDetail> getAllOrderDetails() {
-        return orderDetailsDao.getAllOrderDetails();
+        return orderDetailsRepository.findAll();
     }
 
-//    @Override
-//    @Transactional
-//    public void saveOrderDetail(OrderDetail orderDetail) {
-//         orderDetailsDao.saveOrderDetail( orderDetail);
-//    }
-
+    @Override
+    @Transactional
     public List<OrderDetail>getAllOrderDetailsByOrder(int id){
-        return orderDetailsDao.getAllOrderDetailsByOrder(id);
+        return orderDetailsRepository.findAllByOrderId(id);
     }
 
     @Override
     @Transactional
     public void saveOrderDetail(OrderDetail orderDetail) {
         try {
-            orderDetailsDao.saveOrderDetail(orderDetail);
+            orderDetailsRepository.save(orderDetail);
 
             Book book = orderDetail.getBook();
 
@@ -60,7 +55,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
                 //розрахунок для totalPrice
                 if (orderquantity != 0) {
                     orderDetail.setTotalPrice(bookprice * orderquantity);
-                    orderDetailsDao.saveOrderDetail(orderDetail);
+                    orderDetailsRepository.save(orderDetail);
                 } else {
                     throw new RuntimeException("Quantity = 0");
                 }
