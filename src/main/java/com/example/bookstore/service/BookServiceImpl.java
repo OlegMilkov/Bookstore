@@ -2,6 +2,8 @@ package com.example.bookstore.service;
 
 import com.example.bookstore.entity.Book;
 import com.example.bookstore.repository.BookRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

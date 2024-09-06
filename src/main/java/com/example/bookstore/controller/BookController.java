@@ -40,7 +40,6 @@ public class BookController {
 
     @GetMapping("/shoppingCart")
     public String ShoppingCart(Model model) {
-        System.out.println(shoppingCart.getBooks());
 
         List<Book> booksInCart = shoppingCart.getBooks();
         model.addAttribute("booksInCart", booksInCart);
