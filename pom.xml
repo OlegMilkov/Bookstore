@@ -30,6 +30,8 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+
+
         <!--        дозволяє вам швидко створювати та запускати веб-додатки без нього ми б створювали WebConfig-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,7 +71,10 @@
             <artifactId>spring-security-core</artifactId>
             <version>6.2.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
 
     </dependencies>

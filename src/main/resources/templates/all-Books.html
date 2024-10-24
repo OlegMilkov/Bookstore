@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Books</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 36px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .shopping-cart-button {
+            margin-bottom: 20px;
+        }
+
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .book-card {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 20px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .book-card:hover {
+            transform: scale(1.05);
+        }
+
+        .book-image {
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
+        }
+
+        .book-details {
+            padding: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin: 8px 0;
+        }
+
+        form {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"], input[type="button"], button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin-top: 5px;
+        }
+
+        input[type="submit"]:hover, input[type="button"]:hover, button:hover {
+            background-color: #2980b9;
+        }
+
+        input[type="submit"]:disabled, button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Books</h1>
+
+<div class="shopping-cart-button">
+    <form th:action="@{/book/shoppingCart}" method="get">
+        <button type="submit">Shopping Cart</button>
+    </form>
+</div>
+
+<div class="book-container">
+    <div class="book-card" th:each="book : ${allBooks}">
+        <div class="book-details">
+            <h3 th:text="${book.title}">Book Title</h3>
+            <img class="book-image" th:src="${book.photo}" alt="Book Cover">
+            <p>Author: <span th:text="${book.author.name}">Author</span></p>
+            <p>Price: <span th:text="${book.price}"></span> USD</p>
+            <p>Quantity in Stock: <span th:text="${book.quantityInStock}"></span></p>
+
+            <!-- Форма для покупки книги -->
+            <form th:action="@{/book/addOrder}" method="post">
+                <input type="hidden" name="bookId" th:value="${book.id}">
+                <label for="quantity">Enter quantity to buy:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" th:max="${book.quantityInStock}" required>
+                <input type="submit" value="Buy" th:disabled="${book.quantityInStock == 0}">
+            </form>
+
+            <!-- Форма для додавання книги в кошик (AJAX) -->
+            <form id="cartForm" th:action="@{/book/addBookToShoppingCart}" method="post" class="add-to-cart-form">
+                <input type="hidden" name="bookId" th:value="${book.id}">
+                <button type="button" class="add-to-cart-btn" th:disabled="${book.quantityInStock == 0}">To Cart</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Додаємо JavaScript для роботи з AJAX -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Знаходимо всі кнопки "To Cart"
+        const cartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        cartButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                // Запобігаємо стандартному оновленню сторінки
+                event.preventDefault();
+
+                // Знаходимо відповідну форму
+                const form = this.closest('.add-to-cart-form');
+                const formData = new FormData(form);
+
+                // Виконуємо AJAX-запит
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Якщо додавання успішне, можна додати дії тут (наприклад, оновлення кількості товарів в кошику)
+                            console.log('Book added to cart.');
+                        } else {
+                            console.error('Failed to add book to cart.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
