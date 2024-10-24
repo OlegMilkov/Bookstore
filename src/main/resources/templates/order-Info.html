@@ -63,36 +63,33 @@
 
 <h2>Order Information</h2>
 
-<form action="/book/saveOrderAndOrderDetail" method="post">
-    <input type="hidden" name="id" value="${order.id}"/>
+<form action="#" th:action="@{/book/saveOrderAndOrderDetail}" method="post">
+    <input type="hidden" name="id" th:value="${order.id}"/>
 
+    <div th:each="bookId : ${book}">
+        <input type="hidden" name="bookId" th:value="${bookId}"/>
+    </div>
+    <div th:each="qty : ${quantity}">
+        <input type="hidden" name="quantity" th:value="${qty}"/>
+    </div>
 
+    <label>Name</label>
+    <input type="text" name="name" th:value="${order.name}" placeholder="Name" required/>
 
-    <#list book as bookId>
-        <input type="hidden" name="bookId" value="${bookId}"/>
-        <br>
-    </#list>
-    <#list quantity as qty>
-        <input type="hidden" name="quantity" value="${qty}"/>
-        <br>
+    <label>Surname</label>
+    <input type="text" name="surname" th:value="${order.surname}" placeholder="Surname" required/>
 
-    </#list>
+    <label>Phone</label>
+    <input type="text" name="phone" th:value="${order.phone}" placeholder="Phone" required/>
 
+    <label>Email</label>
+    <input type="email" name="email" th:value="${order.email}" placeholder="Email" required/>
 
-    Name<input type="text" name="name" value="${order.name!}" placeholder="Name"/>
-    <br><br>
-    Surname<input type="text" name="surname" value="${order.surname!}" placeholder="Surname"/>
-    <br><br>
-    Phone<input type="text" name="phone" value="${order.phone!}" placeholder="Phone"/>
-    <br><br>
-    Email<input type="text" name="email" value="${order.email!}" placeholder="Email"/>
-    <br><br>
-    Post office<input type="text" name="post_office" value="${order.post_office!}" placeholder="Post Office"/>
-    <br><br>
+    <label>Post Office</label>
+    <input type="text" name="post_office" th:value="${order.post_office}" placeholder="Post Office" required/>
 
     <input type="submit" value="OK">
 </form>
 
 </body>
 </html>
-

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -20,7 +22,7 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping("/signup")
+    @GetMapping("/signup")
     public String signup(Model model) {
         Users users= new Users();
         model.addAttribute("users", users);
@@ -28,7 +30,7 @@ public class UserController {
     }
 
 
-    @RequestMapping("/saveUser")
+    @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") Users users){
         //отримання ролі та надання йому автоматично значення 2 (ROLE_CUSTOMER)
         Roles roles= new Roles();

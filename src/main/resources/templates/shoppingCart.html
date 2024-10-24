@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
             margin-bottom: 20px;
         }
 
-        .book-container {
+        .cart-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -39,8 +39,9 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
-            display: flex; /* Додаємо flex-контейнер */
-            flex-direction: column; /* Налаштовуємо вертикальне вирівнювання */
+            display: flex;
+            flex-direction: column;
+            text-align: center;
         }
 
         .book-card:hover {
@@ -55,9 +56,7 @@
 
         .book-details {
             padding: 20px;
-            text-align: center;
-            flex-grow: 1; /* Розтягуємо блок, щоб зайняв весь доступний простір */
-            position: relative; /* Додаємо relative позиціонування */
+            flex-grow: 1;
         }
 
         h3 {
@@ -68,19 +67,6 @@
         p {
             color: #666;
             margin: 8px 0;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        input[type="number"] {
-            width: 60px;
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
         }
 
         .close-button {
@@ -99,11 +85,17 @@
             align-items: center;
             font-size: 18px;
             transition: background-color 0.3s ease-in-out;
-
         }
 
         .close-button:hover {
             background-color: #f8efef;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
         }
 
         input[type="submit"] {
@@ -120,6 +112,20 @@
         input[type="submit"]:hover {
             background-color: #2980b9;
         }
+
+        .main-page-button {
+            margin-top: 20px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .main-page-button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -127,30 +133,44 @@
 <h2>Shopping Cart</h2>
 <form action="/book/addOrder" method="post">
 
-    <div class="book-container">
-        <#if booksInCart??>
-            <#list booksInCart as book>
-                <div class="book-card">
-
-                    <div class="book-details">
-                        <div class="close-button" onclick="window.location.href='/book/removeBookFromShoppingCart?bookId=${book.id}'">x</div>
-                        <h3>${book.title}</h3>
-                        <img class="book-image" src="${book.photo}" alt="Book Cover">
-                        <p>Author: ${book.author.name}</p>
-                        <p>Price: ${book.price}</p>
-                        <p>Quantity in Stock: ${book.quantityInStock}</p>
-
-                        <input type="hidden" name="bookId" value="${book.id}">
-                        Quantity:<input type="number" id="quantity" name="quantity" value="1" min="1" max="${book.quantityInStock}" required>
-                    </div>
+    <!-- Якщо є книжки у кошику -->
+    <div class="cart-container" th:if="${not #lists.isEmpty(booksInCart)}">
+        <div th:each="book : ${booksInCart}">
+            <div class="book-card">
+                <div class="close-button"
+                     th:onclick="'window.location.href=\'/book/removeBookFromShoppingCart?bookId=' + ${book.id} + '\''">
+                    x
                 </div>
-            </#list>
-        <#else>
-            <p>No books in the cart</p>
-        </#if>
+                <h3 th:text="${book.title}">Book Title</h3>
+
+                <img class="book-image" th:src="${book.photo}" alt="Book Cover">
+                <p>Author: <span th:text="${book.author.name}">Author Name</span></p>
+                <p>Price: <span th:text="${book.price}">0.00</span> USD</p>
+                <p>Quantity in Stock: <span th:text="${book.quantityInStock}">0</span></p>
+                <input type="hidden" name="bookId" th:value="${book.id}">
+                Quantity:<input type="number" id="quantity" name="quantity" value="1" min="1"
+                                max="${book.quantityInStock}" required>
+            </div>
+        </div>
     </div>
-    <input type="submit" value="Buy" >
+
+    <!-- Повідомлення, якщо кошик порожній -->
+    <div th:if="${#lists.isEmpty(booksInCart)}">
+        <p>Your shopping cart is empty.</p>
+    </div>
+
+    <!-- Кнопка "Buy" відображається тільки, якщо є книжки -->
+    <div th:if="${not #lists.isEmpty(booksInCart)}">
+        <input type="submit" value="Buy">
+    </div>
+
 
 </form>
+<!-- Кнопка "Main Page" з'являється тільки, якщо кошик порожній -->
+<div th:if="${#lists.isEmpty(booksInCart)}">
+    <form action="/book/mainPage" method="get">
+        <button type="submit" class="main-page-button">Main Page</button>
+    </form>
+</div>
 </body>
 </html>

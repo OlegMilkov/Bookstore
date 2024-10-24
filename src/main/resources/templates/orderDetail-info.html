@@ -81,33 +81,32 @@
 
 <h2>Employee Info</h2>
 
-<form action="/book/mainPage">
-    <input type="hidden" name="id" value="${orderDetailItem[0].orderDetailId}"/>
+<form action="#" th:action="@{/book/mainPage}" method="get">
+    <input type="hidden" name="id" th:value="${orderDetailItem[0].orderDetailId}"/>
 
     <!-- Перша група інформації (зліва) -->
     <div>
-        <p><strong>Name:</strong> ${orderDetailItem[0].order.name}</p>
-        <p><strong>Surname:</strong> ${orderDetailItem[0].order.surname}</p>
-        <p><strong>Phone:</strong> ${orderDetailItem[0].order.phone}</p>
-        <p><strong>Email:</strong> ${orderDetailItem[0].order.email}</p>
-        <p><strong>Post Office:</strong> ${orderDetailItem[0].order.post_office}</p>
-        <p><strong>Order Date:</strong> ${orderDetailItem[0].order.orderDate}</p>
+        <p><strong>Name:</strong> <span th:text="${orderDetailItem[0].order.name}"></span></p>
+        <p><strong>Surname:</strong> <span th:text="${orderDetailItem[0].order.surname}"></span></p>
+        <p><strong>Phone:</strong> <span th:text="${orderDetailItem[0].order.phone}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${orderDetailItem[0].order.email}"></span></p>
+        <p><strong>Post Office:</strong> <span th:text="${orderDetailItem[0].order.post_office}"></span></p>
+        <p><strong>Order Date:</strong> <span th:text="${orderDetailItem[0].order.orderDate}"></span></p>
     </div>
 
     <!-- Простір між групами інформації -->
     <div class="spacer"></div>
 
-
     <!-- Друга група інформації (справа) -->
-    <#list orderDetailItem as orderDetail>
-
-    <div>
-        <p><strong>Book:</strong> ${orderDetail.book.title}</p>
-        <img src="${orderDetail.book.photo}" alt="Book Photo" style="max-width: 100%; height: auto; margin-bottom: 10px;">
-        <p><strong>Quantity:</strong> ${orderDetail.quantity}</p>
-        <p><strong>Total price:</strong> ${orderDetail.totalPrice}</p>
+    <div th:each="orderDetail : ${orderDetailItem}">
+        <div>
+            <p><strong>Book:</strong> <span th:text="${orderDetail.book.title}"></span></p>
+            <img th:src="${orderDetail.book.photo}" alt="Book Photo" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+            <p><strong>Quantity:</strong> <span th:text="${orderDetail.quantity}"></span></p>
+            <p><strong>Total price:</strong> <span th:text="${orderDetail.totalPrice}"></span></p>
+        </div>
     </div>
-    </#list>
+
     <input type="submit" value="OK">
 </form>
 

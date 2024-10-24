@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Create Order</title>
     <style>
         /* Загальні стилі для тіла документа */
         body {
@@ -38,6 +38,7 @@
 
         input[type="text"],
         input[type="password"],
+        input[type="number"],
         input[type="submit"] {
             width: 100%;
             padding: 10px; /* Збільшено висоту поля */
@@ -50,7 +51,8 @@
         }
 
         input[type="text"]:hover,
-        input[type="password"]:hover {
+        input[type="password"]:hover,
+        input[type="number"]:hover {
             border-color: #007afd;
         }
 
@@ -80,12 +82,19 @@
             margin-top: 30px;
         }
 
+        /* Стилі для повідомлення про успіх */
+        .success-message {
+            color: green;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
     </style>
 </head>
 
 <body>
 
 <h2>Sign Up</h2>
+
 
 <form action="/user/saveUser" method="post">
 
