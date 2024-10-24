@@ -24,19 +24,19 @@ public class UserController {
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        Users users= new Users();
+        Users users = new Users();
         model.addAttribute("users", users);
         return "signup";
     }
 
 
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") Users users){
+    public String saveUser(@ModelAttribute("user") Users users) {
         //отримання ролі та надання йому автоматично значення 2 (ROLE_CUSTOMER)
-        Roles roles= new Roles();
+        Roles roles = new Roles();
         roles.setId(2);
         users.setRoles(roles);
-//перетворення звичайного паролю в зашифравний
+        //перетворення звичайного паролю в зашифравний
         String rawPassword = users.getPassword();
         String encodedPassword = passwordEncoder.encode(rawPassword);
         users.setPassword(encodedPassword);
@@ -45,7 +45,7 @@ public class UserController {
         userService.saveUser(users);
 
 
-        return"redirect:/book/getAllBook";
+        return "redirect:/book/getAllBook";
     }
 
 }

@@ -3,7 +3,7 @@ package com.example.bookstore.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name ="roles" )
+@Table(name ="roles")
 public class Roles {
 
     @Id
@@ -12,15 +12,14 @@ public class Roles {
     private int id;
 
     @Column(name = "role_name")
-    private String role_name;
-
+    private String roleName; // Використовуйте camelCase для змінних
 
     public Roles() {
     }
 
-    public Roles(int id, String role_name) {
+    public Roles(int id, String roleName) {
         this.id = id;
-        this.role_name = role_name;
+        this.roleName = roleName;
     }
 
     public int getId() {
@@ -31,11 +30,11 @@ public class Roles {
         this.id = id;
     }
 
-    public String getRole_name() {
-        return role_name;
+    public String getRoleName() { // Змінено ім'я методу
+        return roleName; // Змінено ім'я поля
     }
 
-    public void setRole_name(String role_name) {
-        this.role_name = role_name;
+    public void setRoleName(String roleName) { // Змінено ім'я методу
+        this.roleName = roleName; // Змінено ім'я поля
     }
 }
