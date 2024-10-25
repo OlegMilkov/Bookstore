@@ -15,5 +15,5 @@ public interface OrderService {
 
     public void deleteOrder(int id);
 
-
+    public List<List<Integer>> processBookOrders(List<Integer> bookIds, List<Integer> quantities);
 }

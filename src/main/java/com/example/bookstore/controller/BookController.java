@@ -40,38 +40,31 @@ public class BookController {
 
     @GetMapping("/shoppingCart")
     public String ShoppingCart(Model model) {
-
         List<Book> booksInCart = shoppingCart.getBooks();
         model.addAttribute("booksInCart", booksInCart);
-
         return "shoppingCart";
     }
+
+
 
     @PostMapping("/addOrder")
     public String addOrder(@RequestParam("bookId") List<Integer> bookIds,
                            @RequestParam("quantity") List<Integer> quantities,
                            Model model) {
 
-        List<Integer> bookIdNumber = new ArrayList<>();
-        List<Integer> quantityNumber = new ArrayList<>();
+        List<List<Integer>> processedData = orderService.processBookOrders(bookIds, quantities);
 
-        // Логіка обробки замовлення для кожної книжки в списку
-        for (int i = 0; i < bookIds.size(); i++) {
-            int bookId = bookIds.get(i);
-            int quantity = quantities.get(i);
+        model.addAttribute("book", processedData.get(0));
+        model.addAttribute("quantity", processedData.get(1));
 
-            bookIdNumber.add(bookId);
-            quantityNumber.add(quantity);
-        }
-        model.addAttribute("book", bookIdNumber);
-        model.addAttribute("quantity", quantityNumber);
-
-        // Додаємо порожній об'єкт Order в модель
         Order order = new Order();
         model.addAttribute("order", order);
 
         return "order-Info";
     }
+
+
+
 
     @PostMapping("/saveOrderAndOrderDetail")
     public String saveOrder(@ModelAttribute("order") Order order,

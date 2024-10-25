@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 @Service
 public class OrderServiceImpl implements  OrderService{
@@ -45,6 +47,21 @@ public class OrderServiceImpl implements  OrderService{
         orderRepository.deleteById(id);
     }
 
+    @Override
+    public List<List<Integer>> processBookOrders(List<Integer> bookIds, List<Integer> quantities) {
+        List<Integer> bookIdNumber = new ArrayList<>();
+        List<Integer> quantityNumber = new ArrayList<>();
+
+        for (int i = 0; i < bookIds.size(); i++) {
+            int bookId = bookIds.get(i);
+            int quantity = quantities.get(i);
+
+            bookIdNumber.add(bookId);
+            quantityNumber.add(quantity);
+        }
+
+        return Arrays.asList(bookIdNumber, quantityNumber);
+    }
 
 
 }

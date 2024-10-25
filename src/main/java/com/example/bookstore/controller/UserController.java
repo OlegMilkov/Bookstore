@@ -50,7 +50,6 @@ public class UserController {
         users.setEnabled(true);
         userService.saveUser(users);
 
-
         return "redirect:/book/getAllBook";
     }
 
