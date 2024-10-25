@@ -40,11 +40,13 @@ public class SecurityConfig {
 //                        .requestMatchers("/updateInfo").hasRole("MANAGER")
 //                        .requestMatchers("/deleteChild").hasRole("MANAGER")
 //                        .requestMatchers("/addNewChild").hasAnyRole("MANAGER", "HR")
-                        .requestMatchers("/user/**").permitAll()
+                                .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/book/**").authenticated()
 //                                .requestMatchers("/book/shoppingCart").permitAll()
                 )
                 .formLogin(formLogin -> formLogin
+                        .loginPage("/user/signin")  // вказуємо шлях до власної сторінки логіну
+                        .permitAll()  // дозволяємо доступ до сторінки логіну всім
                         // перенаправлення на головну сторінку після успішної аутентифікації
                         .defaultSuccessUrl("/book/getAllBook", true)
                 )

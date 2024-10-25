@@ -22,6 +22,12 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    @GetMapping("/signin")
+    public String showLoginPage() {
+        return "signin";  // повертає login.html
+    }
+
     @GetMapping("/signup")
     public String signup(Model model) {
         Users users = new Users();

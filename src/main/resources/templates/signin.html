@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Загальні стилі для тіла документа */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Стилі для форми */
+        form {
+            text-align: center;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            margin: 10px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #6b6b6b;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s ease-in-out;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        input[type="text"]:hover,
+        input[type="password"]:hover {
+            border-color: #007afd;
+        }
+
+        input[type="submit"] {
+            background-color: #007afd;
+            color: #fff;
+            padding: 15px;
+            height: 50px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0466d0;
+        }
+
+        /* Додаткові стилі для заголовку */
+        h2 {
+            font-size: 36px;
+            color: #1f1f1f;
+            margin-bottom: 10px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Стилі для кнопки Sign Up */
+        .signup-btn {
+            width: 100%;
+            padding: 15px;
+            height: 50px;
+            background-color: #007afd;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .signup-btn:hover {
+            background-color: #0466d0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Login</h2>
+
+<!-- Одна форма для обох кнопок -->
+<form method="post" action="/user/signin">
+    <input type="text" id="username" name="username" placeholder="Username" required>
+    <br><br>
+
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <br><br>
+
+    <input type="submit" value="Login">
+
+    <!-- Кнопка Sign Up, яка не відправляє форму -->
+    <button type="button" class="signup-btn" onclick="window.location.href='/user/signup'">Sign Up</button>
+</form>
+
+</body>
+
+</html>
