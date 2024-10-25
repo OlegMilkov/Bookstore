@@ -17,7 +17,8 @@
             flex-direction: column;
         }
 
-        h2 {
+        h1 {
+            font-size: 36px;
             text-align: center;
             color: #333;
             margin-bottom: 20px;
@@ -31,8 +32,8 @@
 
         .book-card {
             position: relative;
-            width: 300px;
-            height: 400px;
+            width: 300px; /* Ширина картки */
+            height: 520px;
             margin: 20px;
             overflow: hidden;
             background: #fff;
@@ -49,18 +50,15 @@
         }
 
         .book-image {
-            width: 100%;
-            height: 60%;
-            object-fit: cover;
-        }
-
-        .book-details {
-            padding: 20px;
-            flex-grow: 1;
+            width: 180px; /* Ширина зображення */
+            height: 250px; /* Висота зображення */
+            object-fit: cover; /* Зберегти пропорції зображення */
+            margin: 0 auto; /* Центрує зображення */
+            margin-bottom: 10px; /* Відступ між зображенням і текстом */
         }
 
         h3 {
-            margin-top: 0;
+            margin-top: 20px;
             color: #333;
         }
 
@@ -91,10 +89,17 @@
             background-color: #f8efef;
         }
 
+        .quantity-container {
+            display: flex; /* Вирівнює елементи в один рядок */
+            justify-content: center; /* Центрує елементи по горизонталі */
+            align-items: center; /* Центрує елементи по вертикалі */
+            margin-top: 10px; /* Відступ зверху для кращого вигляду */
+        }
+
         input[type="number"] {
             width: 60px;
             padding: 8px;
-            margin: 10px 0;
+            margin-left: 10px; /* Відступ між міткою та полем */
             box-sizing: border-box;
         }
 
@@ -130,7 +135,7 @@
 </head>
 <body>
 
-<h2>Shopping Cart</h2>
+<h1>Shopping Cart</h1>
 <form action="/book/addOrder" method="post">
 
     <!-- Якщо є книжки у кошику -->
@@ -148,8 +153,13 @@
                 <p>Price: <span th:text="${book.price}">0.00</span> USD</p>
                 <p>Quantity in Stock: <span th:text="${book.quantityInStock}">0</span></p>
                 <input type="hidden" name="bookId" th:value="${book.id}">
-                Quantity:<input type="number" id="quantity" name="quantity" value="1" min="1"
-                                max="${book.quantityInStock}" required>
+
+                <!-- Контейнер для поля кількості -->
+                <div class="quantity-container">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1"
+                           max="${book.quantityInStock}" required>
+                </div>
             </div>
         </div>
     </div>
@@ -163,7 +173,6 @@
     <div th:if="${not #lists.isEmpty(booksInCart)}">
         <input type="submit" value="Buy">
     </div>
-
 
 </form>
 <!-- Кнопка "Main Page" з'являється тільки, якщо кошик порожній -->
