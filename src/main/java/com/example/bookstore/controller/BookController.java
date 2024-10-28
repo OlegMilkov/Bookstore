@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -84,7 +83,6 @@ public class BookController {
     public String addBookToCart(@RequestParam("bookId") int id) {
         Book book = bookService.getBookById(id);
         if (book != null) {
-            // Проверяем, есть ли книга уже в корзине
             boolean isBookInCart = shoppingCart.getBooks().stream()
                     .anyMatch(cartBook -> cartBook.getId() == book.getId());
 
@@ -94,7 +92,6 @@ public class BookController {
                 System.out.println("Книга уже есть в корзине");
             }
         }
-//що це таке
         System.out.println(shoppingCart.getBooks());
         return "redirect:/book/getAllBook";
     }

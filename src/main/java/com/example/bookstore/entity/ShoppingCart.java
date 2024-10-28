@@ -23,7 +23,7 @@ public class ShoppingCart {
         books.add(book);
     }
 
-    // Метод для видалення книги з корзини
+    // Метод для видалення книги з кошика
     public void removeBook(Book book) {
         books.remove(book);
     }
@@ -33,12 +33,12 @@ public class ShoppingCart {
         books.clear();
     }
 
-    // Метод для отримання списку книг у корзині
+    // Метод для отримання списку книг у кошику
     public List<Book> getBooks() {
         return books;
     }
 
-    // Метод для обчислення загальної вартості товарів у корзині
+    // Метод для обчислення загальної вартості товарів у кошику
     public double getTotalPrice() {
         double totalPrice = 0.0;
         for (Book book : books) {

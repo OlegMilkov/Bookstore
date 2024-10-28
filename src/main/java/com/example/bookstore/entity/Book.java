@@ -117,7 +117,7 @@ public class Book {
                 ", photo='" + photo + '\'' +
                 ", price=" + price +
                 ", quantityInStock=" + quantityInStock +
-                ", author=" + author +
+                ", author=" + author.getName() +
                 '}';
     }
 }
