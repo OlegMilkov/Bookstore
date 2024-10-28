@@ -1,6 +1,7 @@
 package com.example.bookstore.service;
 
 import com.example.bookstore.entity.Book;
+import com.example.bookstore.entity.Order;
 import com.example.bookstore.entity.OrderDetail;
 import com.example.bookstore.repository.OrderDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,6 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     }
 
     @Override
-    @Transactional
     public void saveOrderDetail(OrderDetail orderDetail) {
         try {
             orderDetailsRepository.save(orderDetail);
@@ -67,6 +67,23 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error processing order detail: " + e.getMessage());
+        }
+    }
+
+    public void saveOrderAndDetails(Order order, List<Integer> bookIds, List<Integer> quantities) {
+        // Додаємо OrderDetail для кожної книги
+        for (int i = 0; i < bookIds.size(); i++) {
+            int bookId = bookIds.get(i);
+            int quantity = quantities.get(i);
+
+            Book book = bookService.getBookById(bookId);
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setQuantity(quantity);
+            orderDetail.setOrder(order);
+            orderDetail.setBook(book);
+
+            // Зберігаємо кожен orderDetail
+            saveOrderDetail(orderDetail);
         }
     }
 

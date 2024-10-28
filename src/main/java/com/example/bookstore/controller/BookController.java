@@ -53,7 +53,6 @@ public class BookController {
                            Model model) {
 
         List<List<Integer>> processedData = orderService.processBookOrders(bookIds, quantities);
-
         model.addAttribute("book", processedData.get(0));
         model.addAttribute("quantity", processedData.get(1));
 
@@ -71,28 +70,16 @@ public class BookController {
                             @RequestParam("bookId") List<Integer> bookIds,
                             @RequestParam("quantity") List<Integer> quantities,
                             Model model) {
-
         orderService.saveOrder(order);
-        int orderId = order.getId();
+        orderDetailsService.saveOrderAndDetails(order, bookIds, quantities);
 
-        for (int i = 0; i < bookIds.size(); i++) {
-            int idNumber = bookIds.get(i);
-            int quantityNumber = quantities.get(i);
-
-            Book book = bookService.getBookById(idNumber);
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setQuantity(quantityNumber);
-            orderDetail.setOrder(order);
-            orderDetail.setBook(book);
-            orderDetailsService.saveOrderDetail(orderDetail); // Зберігаємо кожен orderDetail
-        }
-
-        List<OrderDetail> orderDetailsWithIdOrder = orderDetailsService.getAllOrderDetailsByOrder(orderId);
+        List<OrderDetail> orderDetailsWithIdOrder = orderDetailsService.getAllOrderDetailsByOrder(order.getId());
         model.addAttribute("orderDetailItem", orderDetailsWithIdOrder);
-
 
         return "/orderDetail-info";
     }
+
+
     @RequestMapping("/addBookToShoppingCart")
     public String addBookToCart(@RequestParam("bookId") int id) {
         Book book = bookService.getBookById(id);
@@ -102,15 +89,12 @@ public class BookController {
                     .anyMatch(cartBook -> cartBook.getId() == book.getId());
 
             if (!isBookInCart) {
-                // Если книги нет в корзине, добавляем ее
                 shoppingCart.addBook(book);
             } else {
-                // Книга уже есть в корзине, выполните здесь необходимые действия
-                // Например, отобразить сообщение об ошибке или выполнить другие действия
                 System.out.println("Книга уже есть в корзине");
             }
         }
-////що це таке
+//що це таке
         System.out.println(shoppingCart.getBooks());
         return "redirect:/book/getAllBook";
     }
