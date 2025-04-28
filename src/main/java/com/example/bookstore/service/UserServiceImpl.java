@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService , UserDetailsService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
@@ -39,14 +39,4 @@ public class UserServiceImpl implements UserService , UserDetailsService{
     }
 
 
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Users> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isPresent()) {
-            return new CustomUserDetails(optionalUser.get());
-        } else {
-            throw new UsernameNotFoundException("Користувача з логіном " + username + " не знайдено.");
-        }
-    }
 }

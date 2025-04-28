@@ -1,9 +1,11 @@
 package com.example.bookstore.configuration;
 
+import com.example.bookstore.service.CustomUserDetailsService;
 import com.example.bookstore.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,13 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Autowired
-    private UserServiceImpl userService;
+    private CustomUserDetailsService customUserDetailsService;
 
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(customUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -38,17 +40,19 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers("/updateInfo").hasRole("MANAGER")
-//                        .requestMatchers("/deleteChild").hasRole("MANAGER")
-//                        .requestMatchers("/addNewChild").hasAnyRole("MANAGER", "HR")
                                 .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/book/**").authenticated()
-//                                .requestMatchers("/book/shoppingCart").permitAll()
                 )
+
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/user/signin")  // вказуємо шлях до власної сторінки логіну
-                        .permitAll()  // дозволяємо доступ до сторінки логіну всім
-                        // перенаправлення на головну сторінку після успішної аутентифікації
+                        .loginPage("/user/signin").permitAll()
                         .defaultSuccessUrl("/book/getAllBook", true)
+                        .failureHandler((request, response, exception) -> {
+
+                            String errorParam = exception instanceof BadCredentialsException ? "bad_credentials" : "unknown";
+                            response.sendRedirect("/user/signin?error=" + errorParam);
+                        })
+                        .permitAll()
                 )
                 .build();
     }

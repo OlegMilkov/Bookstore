@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/user")
@@ -24,9 +21,14 @@ public class UserController {
 
 
     @GetMapping("/signin")
-    public String showLoginPage() {
-        return "signin";  // повертає login.html
+    public String showLoginPage(@RequestParam(value = "error", required = false) String error,
+                                Model model) {
+        if (error != null) {
+            model.addAttribute("errorMessage", "Невірний логін або пароль");
+        }
+        return "signin";
     }
+
 
     @GetMapping("/signup")
     public String signup(Model model) {
@@ -38,11 +40,9 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") Users users) {
-        //отримання ролі та надання йому автоматично значення 2 (ROLE_CUSTOMER)
         Roles roles = new Roles();
         roles.setId(2);
         users.setRoles(roles);
-        //перетворення звичайного паролю в зашифравний
         String rawPassword = users.getPassword();
         String encodedPassword = passwordEncoder.encode(rawPassword);
         users.setPassword(encodedPassword);

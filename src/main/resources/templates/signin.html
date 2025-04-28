@@ -119,6 +119,10 @@
     <button type="button" class="signup-btn" onclick="window.location.href='/user/signup'">Sign Up</button>
 </form>
 
+<div th:if="${errorMessage}" style="color: red;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
 </body>
 
 </html>
