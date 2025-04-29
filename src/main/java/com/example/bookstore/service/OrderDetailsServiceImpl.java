@@ -81,10 +81,25 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
             orderDetail.setQuantity(quantity);
             orderDetail.setOrder(order);
             orderDetail.setBook(book);
-
+            orderDetail.setCompleted(false);
             // Зберігаємо кожен orderDetail
             saveOrderDetail(orderDetail);
         }
     }
 
+    public void deleteOrderDetail(int id) {
+        orderDetailsRepository.deleteById(id);
+    }
+
+    @Override
+    public OrderDetail getOrderDetailByOrder(int id) {
+        return orderDetailsRepository.getReferenceById(id);
+    }
+
+    @Override
+    public void updateCompleted(int id) {
+        OrderDetail orderDetail = orderDetailsRepository.getReferenceById(id);
+         orderDetail.setCompleted(true);
+         orderDetailsRepository.save(orderDetail);
+    }
 }

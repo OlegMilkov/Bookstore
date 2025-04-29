@@ -35,7 +35,7 @@ public class OrderServiceImpl implements  OrderService{
     @Transactional
     public void saveOrder(Order order) {
         if (order.getOrderDate() == null) {
-            // Если orderDate равно null, установите текущую дату
+
             order.setOrderDate(LocalDateTime.now());
         }
         orderRepository.save(order);

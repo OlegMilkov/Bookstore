@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -113,6 +113,13 @@
 <body>
 
 <h1>Books</h1>
+
+<div class="back-button" sec:authorize="hasRole('ADMIN')">
+    <form th:action="@{/admin/allOrderDetails}" method="get">
+        <button type="submit" class="button">Admin panel</button>
+    </form>
+</div>
+
 
 <div class="shopping-cart-button">
     <form th:action="@{/book/shoppingCart}" method="get">

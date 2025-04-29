@@ -26,6 +26,9 @@ import jakarta.persistence.*;
         @Column(name = "total_price")
         private Double totalPrice;
 
+        @Column(name = "completed")
+        private Boolean completed;
+
         public OrderDetail() {
         }
 
@@ -77,6 +80,14 @@ import jakarta.persistence.*;
             this.totalPrice = totalPrice;
         }
 
+        public Boolean getCompleted() {
+            return completed;
+        }
+
+        public void setCompleted(Boolean completed) {
+            this.completed = completed;
+        }
+
         @Override
         public String toString() {
             return "OrderDetail{" +
@@ -85,6 +96,7 @@ import jakarta.persistence.*;
                     ", book=" + book +
                     ", quantity=" + quantity +
                     ", totalPrice=" + totalPrice +
+                    ", completed=" + completed +
                     '}';
         }
 

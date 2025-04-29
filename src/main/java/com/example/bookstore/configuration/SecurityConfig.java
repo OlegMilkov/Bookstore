@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -36,17 +37,33 @@ public class SecurityConfig {
     }
 
     @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers("/updateInfo").hasRole("MANAGER")
                                 .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/book/**").authenticated()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                 )
 
                 .formLogin(formLogin -> formLogin
                         .loginPage("/user/signin").permitAll()
-                        .defaultSuccessUrl("/book/getAllBook", true)
+                        .successHandler((request, response, authentication) -> {
+                            boolean isAdmin = authentication.getAuthorities().stream()
+                                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+
+                            if (isAdmin) {
+                                response.sendRedirect("/admin/allOrderDetails");
+                            } else {
+                                response.sendRedirect("/book/getAllBook");
+                            }
+                        })
+
                         .failureHandler((request, response, exception) -> {
 
                             String errorParam = exception instanceof BadCredentialsException ? "bad_credentials" : "unknown";

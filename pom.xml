@@ -76,6 +76,13 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+<!--        Ця бібліотека додає підтримку атрибутів sec:authorize, sec:authentication, тощо — тобто всіх функцій Spring Security для Thymeleaf.-->
+<!--        Без неї xmlns:sec="..." не матиме сенсу, і кнопки будуть видимі всім, бо умова не виконується.-->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
+
 
     </dependencies>
 

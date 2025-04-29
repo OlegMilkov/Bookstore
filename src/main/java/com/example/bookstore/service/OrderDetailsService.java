@@ -15,4 +15,10 @@ public interface OrderDetailsService {
 
     public void saveOrderAndDetails(Order order, List<Integer> bookIds, List<Integer> quantities);
 
+    public void deleteOrderDetail(int id);
+
+    public OrderDetail getOrderDetailByOrder(int id);
+
+    public void updateCompleted(int id);
+
 }
