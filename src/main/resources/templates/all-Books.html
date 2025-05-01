@@ -7,7 +7,11 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f2f2f2;
+            background-image: url('/images/background.jpg');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -16,6 +20,7 @@
             min-height: 100vh;
             flex-direction: column;
         }
+
 
         h1 {
             font-size: 36px;
@@ -51,7 +56,7 @@
         }
 
         .book-image {
-            width: 180px;  /* Ширина 10 пікселів */
+            width: 180px; /* Ширина 10 пікселів */
             height: 250px; /* Висота 10 пікселів */
             object-fit: cover; /* Зберегти пропорції зображення */
         }
@@ -108,22 +113,33 @@
             background-color: #bdc3c7;
             cursor: not-allowed;
         }
+
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
     </style>
 </head>
-<body>
+<body style="position: relative;">
 
 <h1>Books</h1>
 
-<div class="back-button" sec:authorize="hasRole('ADMIN')">
-    <form th:action="@{/admin/allOrderDetails}" method="get">
-        <button type="submit" class="button">Admin panel</button>
-    </form>
-</div>
+<div class="top-buttons">
+
+<form th:action="@{/book/shoppingCart}" method="get">
+    <button type="submit">Shopping Cart</button>
+</form>
+
+<form th:action="@{/admin/allOrderDetails}" method="get" sec:authorize="hasRole('ADMIN')">
+    <button type="submit" class="button">Admin panel</button>
+</form>
 
 
-<div class="shopping-cart-button">
-    <form th:action="@{/book/shoppingCart}" method="get">
-        <button type="submit">Shopping Cart</button>
+    <form th:action="@{/user/signin}" method="get">
+        <button type="submit">Logout</button>
     </form>
 </div>
 
@@ -140,14 +156,16 @@
             <form th:action="@{/book/addOrder}" method="post">
                 <input type="hidden" name="bookId" th:value="${book.id}">
                 <label for="quantity">Enter quantity to buy:</label>
-                <input type="number" id="quantity" name="quantity" value="1" min="1" th:max="${book.quantityInStock}" required>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" th:max="${book.quantityInStock}"
+                       required>
                 <input type="submit" value="Buy" th:disabled="${book.quantityInStock == 0}">
             </form>
 
             <!-- Форма для додавання книги в кошик (AJAX) -->
             <form id="cartForm" th:action="@{/book/addBookToShoppingCart}" method="post" class="add-to-cart-form">
                 <input type="hidden" name="bookId" th:value="${book.id}">
-                <button type="button" class="add-to-cart-btn" th:disabled="${book.quantityInStock == 0}">To Cart</button>
+                <button type="button" class="add-to-cart-btn" th:disabled="${book.quantityInStock == 0}">To Cart
+                </button>
             </form>
         </div>
     </div>

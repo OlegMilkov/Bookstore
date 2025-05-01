@@ -32,19 +32,22 @@ public class AdminController {
     }
 
 
-
     @DeleteMapping("/delete")
     public String deleteOrderDetail_and_Order(@RequestParam("orderId") int orderId,
-                                              @RequestParam("orderDetailId") int orderDetailId,
                                               RedirectAttributes redirectAttributes) {
-        if (orderDetailsService.getOrderDetailByOrder(orderDetailId).getCompleted()) {
-            orderService.deleteOrder(orderId);
-        } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Ви не можете видалити поки Completed не буде ✔ Completed");
+        List<OrderDetail> orderDetails = orderDetailsService.getAllOrderDetailsByOrder(orderId);
+        for (OrderDetail orderDetail : orderDetails) {
+            if (!orderDetail.getCompleted()){
+                redirectAttributes.addFlashAttribute("errorMessage", "Ви не можете видалити поки " +
+                        "всі замовлення  Order ID  будуть ✔ Completed");
+                return "redirect:/admin/allOrderDetails";
+            }
         }
-        return "redirect:/admin/allOrderDetails";
+        orderService.deleteOrder(orderId);
 
+        return "redirect:/admin/allOrderDetails";
     }
+
 
     @PostMapping("/update-completed")
     public String updateCompleted(@RequestParam("orderDetailId") int orderDetailId) {

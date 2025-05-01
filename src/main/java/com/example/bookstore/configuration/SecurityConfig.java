@@ -45,6 +45,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                                .requestMatchers("/images/**", "/css/**", "/js/**", "/webjars/**").permitAll() // ← дозволяємо ресурси
+
 //                        .requestMatchers("/updateInfo").hasRole("MANAGER")
                                 .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/book/**").authenticated()

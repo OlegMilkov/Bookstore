@@ -142,7 +142,7 @@
         </td>
 
         <td class="center">
-            <form th:action="@{'/admin/delete?orderId=' + ${detail.order.id} + '&orderDetailId=' + ${detail.orderDetailId}}" method="post">
+            <form th:action="@{'/admin/delete?orderId=' + ${detail.order.id} }" method="post">
                 <input type="hidden" name="_method" value="DELETE"/>
                 <button type="submit" class="button">Delete</button>
             </form>
