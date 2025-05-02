@@ -38,5 +38,18 @@ public class UserServiceImpl implements UserService {
         rolesRepository.save(roles);
     }
 
+    @Override
+    @Transactional
+    public List<Users> getUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Users getUserById(int Id) {
+        return userRepository.getReferenceById(Id);
+    }
+
+
+
 
 }

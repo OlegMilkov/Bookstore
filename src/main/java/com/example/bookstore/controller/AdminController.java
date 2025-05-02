@@ -1,8 +1,12 @@
 package com.example.bookstore.controller;
 
 import com.example.bookstore.entity.OrderDetail;
+import com.example.bookstore.entity.Roles;
+import com.example.bookstore.entity.Users;
 import com.example.bookstore.service.OrderDetailsService;
 import com.example.bookstore.service.OrderService;
+import com.example.bookstore.service.RolesServiseImpl;
+import com.example.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +22,14 @@ public class AdminController {
 
     private final OrderDetailsService orderDetailsService;
     private final OrderService orderService;
+    private final UserService userService;
+    private final RolesServiseImpl rolesServiseImpl;
 
-    public AdminController(OrderDetailsService orderDetailsService, OrderService orderService) {
+    public AdminController(OrderDetailsService orderDetailsService, OrderService orderService, UserService userService, RolesServiseImpl rolesServiseImpl) {
         this.orderDetailsService = orderDetailsService;
         this.orderService = orderService;
+        this.userService = userService;
+        this.rolesServiseImpl = rolesServiseImpl;
     }
 
     @GetMapping("/allOrderDetails")
@@ -37,9 +45,9 @@ public class AdminController {
                                               RedirectAttributes redirectAttributes) {
         List<OrderDetail> orderDetails = orderDetailsService.getAllOrderDetailsByOrder(orderId);
         for (OrderDetail orderDetail : orderDetails) {
-            if (!orderDetail.getCompleted()){
+            if (!orderDetail.getCompleted()) {
                 redirectAttributes.addFlashAttribute("errorMessage", "Ви не можете видалити поки " +
-                        "всі замовлення  Order ID  будуть ✔ Completed");
+                        "всі замовлення  одного Order ID  будуть ✔ Completed");
                 return "redirect:/admin/allOrderDetails";
             }
         }
@@ -54,5 +62,25 @@ public class AdminController {
         orderDetailsService.updateCompleted(orderDetailId);
 
         return "redirect:/admin/allOrderDetails";
+    }
+
+    @GetMapping("/allUsers")
+    public String getAllUsers(Model model) {
+        List<Users> users = userService.getUsers();
+        model.addAttribute("users", users);
+        return "users-page";
+    }
+
+    @GetMapping("/updateUserRole")
+    public String updateUserRole(@RequestParam("userId") int userId,@RequestParam("newRole") String newRole) {
+        Users users= userService.getUserById(userId);
+        Roles role = rolesServiseImpl.getRoleByName(newRole);
+
+        if (role != null) {
+            users.setRoles(role); // Оновлюємо роль користувача
+            userService.saveUser(users); // Зберігаємо зміни в базі
+        }
+
+        return "redirect:/admin/allUsers";
     }
 }

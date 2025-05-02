@@ -11,17 +11,57 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             flex-direction: column;
+            align-items: center;
         }
 
         h1 {
             font-size: 36px;
             text-align: center;
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
+        }
+
+        .top-buttons {
+            display: flex;
+            justify-content: flex-end;
+            width: 90%;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .top-buttons form {
+            margin: 0;
+        }
+
+        button,
+        .completed-false button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button:hover,
+        .button:hover,
+        .completed-false button:hover {
+            background-color: #2980b9;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
         }
 
         table {
@@ -48,49 +88,10 @@
             background-color: #f1f1f1;
         }
 
-        .back-button
-        {
-            margin-top: 20px;
-        }
-
-        button,
-        .completed-false button
-        {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        button:hover,
-        .button:hover,
-        .completed-false button:hover{
-            background-color: #2980b9;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            font-size: 16px;
-        }
-
         .completed-true {
             color: green;
             font-weight: bold;
         }
-
-
-
     </style>
 </head>
 <body>
@@ -99,9 +100,16 @@
     <p th:text="${errorMessage}"></p>
 </div>
 
-
-
 <h1>All Order Details</h1>
+
+<div class="top-buttons">
+    <form th:action="@{/admin/allUsers}" method="get">
+        <button type="submit">Users</button>
+    </form>
+    <form th:action="@{/book/mainPage}" method="get">
+        <button type="submit" class="button">To Book Store</button>
+    </form>
+</div>
 
 <table>
     <thead>
@@ -119,7 +127,6 @@
     </tr>
     </thead>
     <tbody>
-
     <tr th:each="detail : ${orderDetails}">
         <td th:text="${detail.orderDetailId}"></td>
         <td th:text="${detail.book.title}"></td>
@@ -129,10 +136,8 @@
         <td th:text="${detail.order.email}"></td>
         <td th:text="${detail.order.phone}"></td>
         <td th:text="${detail.order.post_office}"></td>
-
         <td>
             <span th:if="${detail.completed}" class="completed-true">✔ Completed</span>
-
             <form th:if="${!detail.completed}"
                   th:action="@{/admin/update-completed}" method="post"
                   class="completed-false">
@@ -140,26 +145,15 @@
                 <button type="submit">Mark as Done</button>
             </form>
         </td>
-
         <td class="center">
-            <form th:action="@{'/admin/delete?orderId=' + ${detail.order.id} }" method="post">
+            <form th:action="@{'/admin/delete?orderId=' + ${detail.order.id}}" method="post">
                 <input type="hidden" name="_method" value="DELETE"/>
                 <button type="submit" class="button">Delete</button>
             </form>
-
         </td>
-
-
-
     </tr>
     </tbody>
 </table>
-
-<div class="back-button">
-    <form th:action="@{/book/mainPage}" method="get">
-        <button type="submit" class="button">to Book Store</button>
-    </form>
-</div>
 
 </body>
 </html>
