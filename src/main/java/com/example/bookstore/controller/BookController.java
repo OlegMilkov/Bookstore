@@ -71,6 +71,8 @@ public class BookController {
                             Model model) {
         orderService.saveOrder(order);
         orderDetailsService.saveOrderAndDetails(order, bookIds, quantities);
+        shoppingCart.clear();
+
 
         List<OrderDetail> orderDetailsWithIdOrder = orderDetailsService.getAllOrderDetailsByOrder(order.getId());
         model.addAttribute("orderDetailItem", orderDetailsWithIdOrder);

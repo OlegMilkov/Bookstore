@@ -1,7 +1,6 @@
 package com.example.bookstore.configuration;
 
 import com.example.bookstore.service.CustomUserDetailsService;
-import com.example.bookstore.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
