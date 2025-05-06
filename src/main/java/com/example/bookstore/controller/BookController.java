@@ -75,6 +75,13 @@ public class BookController {
 
 
         List<OrderDetail> orderDetailsWithIdOrder = orderDetailsService.getAllOrderDetailsByOrder(order.getId());
+        double allprice=0;
+        for(OrderDetail orderDetail : orderDetailsWithIdOrder){
+           allprice+= orderDetail.getTotalPrice();
+        }
+        System.out.println(allprice);
+
+        model.addAttribute("allprice", allprice);
         model.addAttribute("orderDetailItem", orderDetailsWithIdOrder);
 
         return "/orderDetail-info";
