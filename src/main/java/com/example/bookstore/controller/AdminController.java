@@ -3,11 +3,7 @@ package com.example.bookstore.controller;
 import com.example.bookstore.entity.OrderDetail;
 import com.example.bookstore.entity.Roles;
 import com.example.bookstore.entity.Users;
-import com.example.bookstore.service.OrderDetailsService;
-import com.example.bookstore.service.OrderService;
-import com.example.bookstore.service.RolesServiseImpl;
-import com.example.bookstore.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.bookstore.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +19,13 @@ public class AdminController {
     private final OrderDetailsService orderDetailsService;
     private final OrderService orderService;
     private final UserService userService;
-    private final RolesServiseImpl rolesServiseImpl;
+    private final RolesService rolesService;
 
-    public AdminController(OrderDetailsService orderDetailsService, OrderService orderService, UserService userService, RolesServiseImpl rolesServiseImpl) {
+    public AdminController(OrderDetailsService orderDetailsService, OrderService orderService, UserService userService, RolesService rolesService) {
         this.orderDetailsService = orderDetailsService;
         this.orderService = orderService;
         this.userService = userService;
-        this.rolesServiseImpl = rolesServiseImpl;
+        this.rolesService = rolesService;
     }
 
     @GetMapping("/allOrderDetails")
@@ -74,7 +70,7 @@ public class AdminController {
     @GetMapping("/updateUserRole")
     public String updateUserRole(@RequestParam("userId") int userId,@RequestParam("newRole") String newRole) {
         Users users= userService.getUserById(userId);
-        Roles role = rolesServiseImpl.getRoleByName(newRole);
+        Roles role = rolesService.getRoleByName(newRole);
 
         if (role != null) {
             users.setRoles(role); // Оновлюємо роль користувача

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RolesServiseImpl implements RolesServise {
+public class RolesServiceImpl implements RolesService {
 
     @Autowired
     private RolesRepository rolesRepository;

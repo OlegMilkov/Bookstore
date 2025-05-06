@@ -18,17 +18,19 @@ import java.util.List;
 @RequestMapping("/book")
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
+    private final OrderService orderService;
+    private  final OrderDetailsService orderDetailsService;
+    private final ShoppingCart shoppingCart ;
 
-    @Autowired
-    private OrderService orderService;
+    public BookController(BookService bookService, OrderService orderService, OrderDetailsService orderDetailsService,ShoppingCart shoppingCart) {
+        this.bookService = bookService;
+        this.orderService = orderService;
+        this.orderDetailsService = orderDetailsService;
+        this.shoppingCart=shoppingCart;
 
-    @Autowired
-    private OrderDetailsService orderDetailsService;
+    }
 
-    @Autowired
-    private ShoppingCart shoppingCart;
 
     @GetMapping("/getAllBook")
     public String showAllBooks(Model model) {
@@ -38,7 +40,7 @@ public class BookController {
     }
 
     @GetMapping("/shoppingCart")
-    public String ShoppingCart(Model model) {
+    public String shoppingCart(Model model) {
         List<Book> booksInCart = shoppingCart.getBooks();
         model.addAttribute("booksInCart", booksInCart);
         return "shoppingCart";
@@ -88,7 +90,7 @@ public class BookController {
     }
 
 
-    @RequestMapping("/addBookToShoppingCart")
+    @PostMapping("/addBookToShoppingCart")
     public String addBookToCart(@RequestParam("bookId") int id) {
         Book book = bookService.getBookById(id);
         if (book != null) {
@@ -108,11 +110,10 @@ public class BookController {
 
     //    --------------------------------------------------------
 
-    @RequestMapping("/removeBookFromShoppingCart")
+    @GetMapping("/removeBookFromShoppingCart")
     public String removeBookFromShoppingCart(@RequestParam("bookId") int bookId) {
         Book book = bookService.getBookById(bookId);
         shoppingCart.removeBook(book);
-        System.out.println(shoppingCart.getBooks());
 
         return "redirect:/book/shoppingCart";
     }
