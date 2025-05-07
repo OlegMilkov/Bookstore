@@ -61,7 +61,7 @@ public class SecurityConfig {
                             if (isAdmin) {
                                 response.sendRedirect("/admin/allOrderDetails");
                             } else {
-                                response.sendRedirect("/book/getAllBook");
+                                response.sendRedirect("/book/books");
                             }
                         })
 

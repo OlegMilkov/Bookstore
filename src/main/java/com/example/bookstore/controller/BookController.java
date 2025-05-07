@@ -7,7 +7,6 @@ import com.example.bookstore.entity.ShoppingCart;
 import com.example.bookstore.service.BookService;
 import com.example.bookstore.service.OrderDetailsService;
 import com.example.bookstore.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,19 +19,19 @@ public class BookController {
 
     private final BookService bookService;
     private final OrderService orderService;
-    private  final OrderDetailsService orderDetailsService;
-    private final ShoppingCart shoppingCart ;
+    private final OrderDetailsService orderDetailsService;
+    private final ShoppingCart shoppingCart;
 
-    public BookController(BookService bookService, OrderService orderService, OrderDetailsService orderDetailsService,ShoppingCart shoppingCart) {
+    public BookController(BookService bookService, OrderService orderService, OrderDetailsService orderDetailsService, ShoppingCart shoppingCart) {
         this.bookService = bookService;
         this.orderService = orderService;
         this.orderDetailsService = orderDetailsService;
-        this.shoppingCart=shoppingCart;
+        this.shoppingCart = shoppingCart;
 
     }
 
 
-    @GetMapping("/getAllBook")
+    @GetMapping("/books")
     public String showAllBooks(Model model) {
         List<Book> allBooks = bookService.getAllBooks();
         model.addAttribute("allBooks", allBooks);
@@ -45,7 +44,6 @@ public class BookController {
         model.addAttribute("booksInCart", booksInCart);
         return "shoppingCart";
     }
-
 
 
     @PostMapping("/addOrder")
@@ -64,8 +62,6 @@ public class BookController {
     }
 
 
-
-
     @PostMapping("/saveOrderAndOrderDetail")
     public String saveOrder(@ModelAttribute("order") Order order,
                             @RequestParam("bookId") List<Integer> bookIds,
@@ -77,11 +73,10 @@ public class BookController {
 
 
         List<OrderDetail> orderDetailsWithIdOrder = orderDetailsService.getAllOrderDetailsByOrder(order.getId());
-        double allprice=0;
-        for(OrderDetail orderDetail : orderDetailsWithIdOrder){
-           allprice+= orderDetail.getTotalPrice();
+        double allprice = 0;
+        for (OrderDetail orderDetail : orderDetailsWithIdOrder) {
+            allprice += orderDetail.getTotalPrice();
         }
-        System.out.println(allprice);
 
         model.addAttribute("allprice", allprice);
         model.addAttribute("orderDetailItem", orderDetailsWithIdOrder);
@@ -100,11 +95,11 @@ public class BookController {
             if (!isBookInCart) {
                 shoppingCart.addBook(book);
             } else {
-                System.out.println("Книга уже есть в корзине");
+                System.out.println("Книга вже в корзині");
             }
         }
         System.out.println(shoppingCart.getBooks());
-        return "redirect:/book/getAllBook";
+        return "redirect:/book/books";
     }
 
 
@@ -121,7 +116,7 @@ public class BookController {
 
     @GetMapping("/mainPage")
     public String mainPage() {
-        return "redirect:/book/getAllBook";
+        return "redirect:/book/books";
     }
 
 
